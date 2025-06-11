@@ -71,14 +71,21 @@ void print(int arr[], int size)
     cout << endl;
 }
 
+void mergeSort(int arr[], int l, int r)
+{
+    if (r > l)
+    {
+        int m = l + ((r - l) / 2);
+        mergeSort(arr, l, m);
+        mergeSort(arr, m + 1, r);
+        mergefun(l, r, m, arr);
+    }
+}
+
 int main()
 {
-    int arr[] = {10, 15, 20, 40, 8, 11, 55};
-    int size = 7;
-    int low = 0;
-    int mid = 3;
-    int high = 6;
-    print(arr, size);
-    mergefun(low, high, mid, arr);
-    print(arr, size);
+    int arr[5] = {10, 5, 30, 15, 7};
+    print(arr, 5);
+    mergeSort(arr, 0, 4);
+    print(arr, 5);
 }

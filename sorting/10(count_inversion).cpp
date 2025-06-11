@@ -2,7 +2,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void mergefun(int low, int high, int mid, int arr[])
+int mergefun(int low, int high, int mid, int arr[])
 {
     int n1 = mid - low + 1;
     int n2 = high - mid;
@@ -22,7 +22,7 @@ void mergefun(int low, int high, int mid, int arr[])
     int i = 0;
     int j = 0;
     int k = low;
-
+    int res = 0;
     while (i < n1 && j < n2)
     {
         if (left_arr[i] < right_arr[j])
@@ -36,6 +36,7 @@ void mergefun(int low, int high, int mid, int arr[])
             arr[k] = right_arr[j];
             k++;
             j++;
+            res = res + n1 - i;
         }
         else
         {
@@ -59,6 +60,8 @@ void mergefun(int low, int high, int mid, int arr[])
         k++;
         j++;
     }
+
+    return res;
 }
 
 void print(int arr[], int size)
@@ -71,14 +74,23 @@ void print(int arr[], int size)
     cout << endl;
 }
 
-int main()
+int mergeSort(int arr[], int l, int r)
 {
-    int arr[] = {10, 15, 20, 40, 8, 11, 55};
-    int size = 7;
-    int low = 0;
-    int mid = 3;
-    int high = 6;
-    print(arr, size);
-    mergefun(low, high, mid, arr);
-    print(arr, size);
+    int res = 0;
+    if (r > l)
+    {
+        int m = l + ((r - l) / 2);
+        res = res + mergeSort(arr, l, m);
+        res = res + mergeSort(arr, m + 1, r);
+        res = res + mergefun(l, r, m, arr);
+    }
+    return res;
+}
+
+int main()  
+{
+    int arr[5] = {2, 4, 1, 3, 5};
+    print(arr, 5);
+    cout << mergeSort(arr, 0, 4) << endl;
+    print(arr, 5);
 }
